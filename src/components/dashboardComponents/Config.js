@@ -17,11 +17,20 @@ function Config() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      getConfigsForClient();
-    } else {
-      navigate("/login");
-    }
+    const fetchData = async () => {
+      if (localStorage.getItem("token")) {
+        let response = await getConfigsForClient();
+        console.log(response);
+        if (response === -2) {
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      } else {
+        navigate("/login");
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleButtonClick = (id) => {

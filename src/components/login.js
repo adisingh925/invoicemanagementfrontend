@@ -62,6 +62,7 @@ function Login() {
                   type="password"
                   name="password"
                   id="password"
+                  autoComplete="on"
                   required
                   onChange={onChange}
                   placeholder="••••••••"

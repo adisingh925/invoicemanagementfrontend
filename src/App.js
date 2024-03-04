@@ -6,9 +6,7 @@ import GlobalState from "./context/GlobalState";
 function App() {
   return (
     <GlobalState>
-      <div className="dark:bg-gray-900">
         <Main />
-      </div>
     </GlobalState>
   );
 }

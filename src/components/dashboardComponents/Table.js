@@ -1,7 +1,9 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { field: "invoice_id", headerName: "Invoice ID", width: 150 },
@@ -79,43 +81,60 @@ const columns = [
 ];
 
 export default function DataTable(props) {
+  let navigate = useNavigate();
 
-    const darkTheme = createTheme({
-        palette: {
-          mode: 'dark',
-        },
-      });
-      
-    return (
-      <ThemeProvider theme={darkTheme}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "90vh",
-            margin: "20px",
-          }}
-        >
-          <div style={{ height: "100%", width: "100%" }}>
-            <DataGrid
-              getRowId={props.getRowId}
-              rows={props.rows}
-              rowCount={100}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
-                },
-              }}
-              onPaginationModelChange={(newModel) => {
-                props.onPaginationModelChange(newModel);
-              }}
-              pageSizeOptions={[5, 10, 20, 50, 100]}
-              checkboxSelection
-            />
-          </div>
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
+  const refreshTable = async () => {
+    let response = await props.refreshTable();
+    if (response === -2) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  };
+
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "70vh",
+          margin: "20px",
+        }}
+      >
+        <div style={{ height: "100%", width: "100%" }}>
+          <Button
+            variant="contained"
+            onClick={refreshTable}
+            style={{ marginBottom: "20px" }}
+          >
+            Refresh Table
+          </Button>
+
+          <DataGrid
+            getRowId={props.getRowId}
+            rows={props.rows}
+            rowCount={100}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            onPaginationModelChange={(newModel) => {
+              props.onPaginationModelChange(newModel);
+            }}
+            pageSizeOptions={[5, 10, 20, 50, 100]}
+            checkboxSelection
+          />
         </div>
-      </ThemeProvider>
-    );
-  }
+      </div>
+    </ThemeProvider>
+  );
+}

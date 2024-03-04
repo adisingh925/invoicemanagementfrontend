@@ -7,15 +7,22 @@ function Dashboard() {
   let navigate = useNavigate();
   const context = useContext(globalContext);
 
-  const { getTableData, tableData, onPaginationModelChange } = context;
+  const { getTableData, tableData, onPaginationModelChange, refreshTable } = context;
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      console.log("Getting table data");
-      getTableData(5, 1);
-    } else {
-      navigate("/login");
-    }
+    const fetchData = async () => {
+      if (localStorage.getItem("token")) {
+        let response = await getTableData(5, 1);
+        if (response === -2) {
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      } else {
+        navigate("/login");
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -24,6 +31,7 @@ function Dashboard() {
         rows={tableData}
         getRowId={(row) => row.invoice_id}
         onPaginationModelChange={onPaginationModelChange}
+        refreshTable={refreshTable}
       />
     </div>
   );

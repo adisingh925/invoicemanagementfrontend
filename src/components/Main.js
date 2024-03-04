@@ -11,7 +11,6 @@ import SnackBar from "./SnackBar";
 import Dashboard from "./dashboardComponents/Dashboard";
 import NavBar from "./NavBar";
 import Config from "./dashboardComponents/Config";
-import Example from "./NavBar";
 
 function Main() {
   const context = useContext(globalContext);

@@ -1,9 +1,20 @@
 import { useState } from "react";
 import GlobalContext from "./GlobalContext";
 import MakeRequest from "../axios/MakeRequest";
-import { tab } from "@testing-library/user-event/dist/tab";
 
 const State = (props) => {
+  const refreshTable = async () => {
+    try {
+      setTableData([]);
+      return getTableData(5, 1);
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText(error);
+      setSnackbarState(true);
+    }
+  };
+
   const login = async (credentials) => {
     try {
       let returnValue = -1;
@@ -16,10 +27,10 @@ const State = (props) => {
       if (response.data.code === 1) {
         localStorage.setItem("token", response.data.token);
         setSeverity("success");
-        returnValue = 1;
+        returnValue = response.data.code;
       } else {
         setSeverity("error");
-        returnValue = -1;
+        returnValue = response.data.code;
       }
 
       setSnackbarText(response.data.msg);
@@ -62,10 +73,10 @@ const State = (props) => {
         );
 
         setTableData((prevData) => [...prevData, ...newTableData]);
-        returnValue = 1;
+        returnValue = response.data.code;
       } else {
         setSeverity("error");
-        returnValue = -1;
+        returnValue = response.data.code;
       }
 
       setSnackbarText(response.data.msg);
@@ -120,10 +131,10 @@ const State = (props) => {
         );
 
         setConfig((prevData) => [...prevData, ...newConfigData]);
-        returnValue = 1;
+        returnValue = response.data.code;
       } else {
         setSeverity("error");
-        returnValue = -1;
+        returnValue = response.data.code;
       }
 
       setSnackbarText(response.data.msg);
@@ -158,15 +169,14 @@ const State = (props) => {
 
       if (response.data.code === 1) {
         setSeverity("success");
-        returnValue = 1;
+        returnValue = response.data.code;
       } else {
         setSeverity("error");
-        returnValue = -1;
+        returnValue = response.data.code;
       }
 
       setSnackbarText(response.data.msg);
       setSnackbarState(true);
-
       setProgress(100);
 
       return returnValue;
@@ -210,7 +220,8 @@ const State = (props) => {
         onPaginationModelChange,
         config,
         getConfigsForClient,
-        updateConfigForCustomer
+        updateConfigForCustomer,
+        refreshTable
       }}
     >
       {props.children}
