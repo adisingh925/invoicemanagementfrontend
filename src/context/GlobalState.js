@@ -49,6 +49,39 @@ const State = (props) => {
     }
   };
 
+  const resetPassword = async (credentials, token) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(token, "post", "auth/reset-password", credentials);
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText(error);
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
   const getTableData = async (limit, page) => {
     try {
       let returnValue = -1;
@@ -221,7 +254,8 @@ const State = (props) => {
         config,
         getConfigsForClient,
         updateConfigForCustomer,
-        refreshTable
+        refreshTable,
+        resetPassword
       }}
     >
       {props.children}

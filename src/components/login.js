@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
     let response = await login(credentials);
     if (response === 1) {
-      navigate("/dashboard");
+      navigate("/");
     }
   };
 

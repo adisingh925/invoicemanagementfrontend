@@ -11,6 +11,8 @@ import SnackBar from "./SnackBar";
 import Dashboard from "./dashboardComponents/Dashboard";
 import NavBar from "./NavBar";
 import Config from "./dashboardComponents/Config";
+import ContactUs from "./ContactUs";
+import ResetPassword from "./ResetPassword";
 
 function Main() {
   const context = useContext(globalContext);
@@ -40,9 +42,11 @@ function Main() {
         <Routes>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/" element={<Dashboard />}></Route>
           <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
           <Route path="/config" element={<Config />}></Route>
+          <Route path="/contact" element={<ContactUs />}></Route>
+          <Route path="/reset-password/:token" element={<ResetPassword />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
