@@ -49,12 +49,89 @@ const State = (props) => {
     }
   };
 
-  const resetPassword = async (credentials, token) => {
+  const signup = async (credentials) => {
     try {
       let returnValue = -1;
       setProgress(10);
 
-      let response = await MakeRequest(token, "post", "auth/reset-password", credentials);
+      let response = await MakeRequest("", "post", "auth/signup", credentials);
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        localStorage.setItem("token", response.data.token);
+        setSeverity("success");
+        returnValue = response.data.code;
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText(error);
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const sendResetLink = async (email, token) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        token,
+        "get",
+        `auth/sendResetLink/${email}`,
+        null
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText(error);
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const resetPassword = async (password, token) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        token,
+        "post",
+        `auth/resetPassword/${token}`,
+        password
+      );
 
       setProgress(50);
 
@@ -255,7 +332,9 @@ const State = (props) => {
         getConfigsForClient,
         updateConfigForCustomer,
         refreshTable,
-        resetPassword
+        resetPassword,
+        signup,
+        sendResetLink,
       }}
     >
       {props.children}

@@ -60,7 +60,7 @@ export default function NavBar() {
                       ))}
                     <Link
                       to="/contact"
-                      className="bg-blue-500 text-white hover:bg-blue-700 rounded-md px-3 py-2 text-sm font-medium"
+                      className="bg-blue-600 text-white hover:bg-blue-700 rounded-md px-3 py-2 text-sm font-medium"
                     >
                       Contact Us
                     </Link>

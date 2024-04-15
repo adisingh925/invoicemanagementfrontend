@@ -46,7 +46,7 @@ function Main() {
           <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
           <Route path="/config" element={<Config />}></Route>
           <Route path="/contact" element={<ContactUs />}></Route>
-          <Route path="/reset-password/:token" element={<ResetPassword />}></Route>
+          <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
