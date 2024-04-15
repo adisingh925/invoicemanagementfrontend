@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import globalContext from "../context/GlobalContext";
-import { useNavigate } from "react-router-dom";
 
 function ForgetPassword() {
-  let navigate = useNavigate();
   const context = useContext(globalContext);
   const { sendResetLink } = context;
   const [email, setEmail] = useState({ email: "" });
@@ -17,7 +15,6 @@ function ForgetPassword() {
     await sendResetLink(email.email, localStorage.getItem("token"));
   };
 
-  
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

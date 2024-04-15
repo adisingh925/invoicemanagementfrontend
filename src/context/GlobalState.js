@@ -42,7 +42,7 @@ const State = (props) => {
     } catch (error) {
       setProgress(100);
       setSeverity("error");
-      setSnackbarText(error);
+      setSnackbarText("Some error occurred. Please try again later.");
       setSnackbarState(true);
 
       return -1;
@@ -76,7 +76,7 @@ const State = (props) => {
     } catch (error) {
       setProgress(100);
       setSeverity("error");
-      setSnackbarText(error);
+      setSnackbarText("Some error occurred. Please try again later.");
       setSnackbarState(true);
 
       return -1;
@@ -114,7 +114,7 @@ const State = (props) => {
     } catch (error) {
       setProgress(100);
       setSeverity("error");
-      setSnackbarText(error);
+      setSnackbarText("Some error occurred. Please try again later.");
       setSnackbarState(true);
 
       return -1;
@@ -152,7 +152,7 @@ const State = (props) => {
     } catch (error) {
       setProgress(100);
       setSeverity("error");
-      setSnackbarText(error);
+      setSnackbarText("Some error occurred. Please try again later.");
       setSnackbarState(true);
 
       return -1;
@@ -198,7 +198,7 @@ const State = (props) => {
     } catch (error) {
       setProgress(100);
       setSeverity("error");
-      setSnackbarText(error);
+      setSnackbarText("Some error occurred. Please try again later.");
       setSnackbarState(true);
 
       return -1;
@@ -256,7 +256,7 @@ const State = (props) => {
     } catch (error) {
       setProgress(100);
       setSeverity("error");
-      setSnackbarText(error);
+      setSnackbarText("Some error occurred. Please try again later.");
       setSnackbarState(true);
 
       return -1;
@@ -293,7 +293,7 @@ const State = (props) => {
     } catch (error) {
       setProgress(100);
       setSeverity("error");
-      setSnackbarText(error);
+      setSnackbarText("Some error occurred. Please try again later.");
       setSnackbarState(true);
 
       return -1;
