@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const MakeRequest = async (token, method, url, data) => {
-  const baseURL = process.env.NODE_ENV === "development" ? "http://localhost/" : "https://3.110.195.159/";
+  const baseURL = process.env.NODE_ENV === "development" ? process.env.REACT_APP_DEVELOPMENT_URL : process.env.REACT_APP_SERVER_URL;
   return axios({
     method: method,
     validateStatus: () => true,

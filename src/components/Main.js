@@ -10,7 +10,6 @@ import globalContext from "../context/GlobalContext";
 import SnackBar from "./SnackBar";
 import Dashboard from "./dashboardComponents/Dashboard";
 import NavBar from "./NavBar";
-import Config from "./dashboardComponents/Config";
 import ContactUs from "./ContactUs";
 import ResetPassword from "./ResetPassword";
 
@@ -44,7 +43,6 @@ function Main() {
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
-          <Route path="/config" element={<Config />}></Route>
           <Route path="/contact" element={<ContactUs />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
           <Route path="*" element={<NotFound />}></Route>
