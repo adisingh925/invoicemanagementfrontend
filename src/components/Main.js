@@ -12,7 +12,8 @@ import Dashboard from "./Dashboard";
 import NavBar from "./NavBar";
 import ContactUs from "./ContactUs";
 import ResetPassword from "./ResetPassword";
-import Gym from "./Gym";
+import Notes from "./Notes";
+import Sidebar from "./Sidebar";
 
 function Main() {
   const context = useContext(globalContext);
@@ -45,8 +46,9 @@ function Main() {
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
           <Route path="/contactus" element={<ContactUs />}></Route>
-          <Route path="/gym" element={<Gym />}></Route>
+          <Route path="/notes" element={<Notes />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
+          <Route path="/notes/:noteId" element={<Sidebar />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
