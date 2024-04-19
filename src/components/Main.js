@@ -43,7 +43,7 @@ function Main() {
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
-          <Route path="/contact" element={<ContactUs />}></Route>
+          <Route path="/contactus" element={<ContactUs />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
