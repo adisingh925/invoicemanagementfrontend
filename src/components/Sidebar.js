@@ -1,5 +1,6 @@
 import React from "react";
 import NavBar from "./NavBar";
+import DataGridDemo from "./Datagrid";
 
 function Sidebar() {
   return (
@@ -13,7 +14,7 @@ function Sidebar() {
         class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-blue sm:translate-x-0 dark:bg-blue"
         aria-label="Sidebar"
       >
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-blue dark:bg-blue">
+        <div class="h-full px-3 pb-4 overflow-y-auto bg-blue border-r border-gray-500 dark:bg-blue">
           <ul class="space-y-2 font-medium">
             <li>
               <a
@@ -156,10 +157,12 @@ function Sidebar() {
       <div class="sm:ml-64">
         <button
           type="submit"
-          className="mt-20 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="mt-20 ms-5 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Add Note
         </button>
+        
+        <DataGridDemo/>
       </div>
     </>
   );
