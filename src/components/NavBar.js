@@ -4,7 +4,9 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
 const navigation = [
+  { name: "Dashboard", href: "/", current: false },
   { name: "Contact Us", href: "/contactus", current: false },
+  { name: "Gym", href: "/gym", current: false },
 ];
 
 function classNames(...classes) {
@@ -42,6 +44,7 @@ export default function NavBar() {
                   <div className="flex space-x-4">
                     {localStorage.getItem("token") != null &&
                       navigation.map((item) => (
+                        
                         <Link
                           key={item.name}
                           to={item.href}
@@ -56,12 +59,12 @@ export default function NavBar() {
                           {item.name}
                         </Link>
                       ))}
-                    <Link
+                    {/* <Link
                       to="/contactus"
                       className="bg-blue-600 text-white hover:bg-blue-700 rounded-md px-3 py-2 text-sm font-medium"
                     >
                       Contact Us
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>

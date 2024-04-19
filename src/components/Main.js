@@ -8,10 +8,11 @@ import LoadingBar from "react-top-loading-bar";
 import { useContext } from "react";
 import globalContext from "../context/GlobalContext";
 import SnackBar from "./SnackBar";
-import Dashboard from "./dashboardComponents/Dashboard";
+import Dashboard from "./Dashboard";
 import NavBar from "./NavBar";
 import ContactUs from "./ContactUs";
 import ResetPassword from "./ResetPassword";
+import Gym from "./Gym";
 
 function Main() {
   const context = useContext(globalContext);
@@ -44,6 +45,7 @@ function Main() {
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
           <Route path="/contactus" element={<ContactUs />}></Route>
+          <Route path="/gym" element={<Gym />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
