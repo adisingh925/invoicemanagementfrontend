@@ -47,7 +47,7 @@ function Main() {
           <Route path="/contactus" element={<ContactUs />}></Route>
           <Route path="/notes" element={<Notes />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
-          <Route path="/notes/:noteId" element={<Sidebar />}></Route>
+          <Route path="/notes/:noteId/members" element={<Sidebar />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>

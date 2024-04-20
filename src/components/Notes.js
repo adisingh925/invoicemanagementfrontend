@@ -7,12 +7,12 @@ const cardData = [
     title: "Noteworthy technology acquisitions 2021",
     description:
       "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-    link: "http://localhost:3000/notes/1",
+    link: "http://localhost:3000/notes/1/members",
   },
   {
     title: "Another Title",
     description: "Here's another description for another card.",
-    link: "http://localhost:3000/notes/2",
+    link: "http://localhost:3000/notes/2/members",
   },
 ];
 
