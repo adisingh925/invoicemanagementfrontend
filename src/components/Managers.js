@@ -9,32 +9,24 @@ function Managers() {
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "firstName",
-      headerName: "First name",
+      field: "managerName",
+      headerName: "Manager Name",
       width: 150,
       editable: true,
     },
     {
-      field: "lastName",
-      headerName: "Last name",
+      field: "managerEmail",
+      headerName: "Manager Email",
       width: 150,
       editable: true,
     },
     {
-      field: "age",
-      headerName: "Age",
+      field: "managerPhoneNumber",
+      headerName: "Phone Number",
       type: "number",
-      width: 110,
+      width: 150,
       editable: true,
     },
-    //   {
-    //     field: 'fullName',
-    //     headerName: 'Full name',
-    //     description: 'This column has a value getter and is not sortable.',
-    //     sortable: false,
-    //     width: 160,
-    //     valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-    //   },
   ];
 
   const rows = [
