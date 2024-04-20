@@ -14,6 +14,7 @@ import ResetPassword from "./ResetPassword";
 import Notes from "./Notes";
 import Members from "./Members";
 import Managers from "./Managers";
+import Memberships from "./Memberships";
 
 function Main() {
   const context = useContext(globalContext);
@@ -49,6 +50,7 @@ function Main() {
           <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
           <Route path="/notes/:noteId/members" element={<Members />}></Route>
           <Route path="/notes/:noteId/managers" element={<Managers />}></Route>
+          <Route path="/notes/:noteId/memberships" element={<Memberships />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>

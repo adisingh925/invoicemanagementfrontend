@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import Datagrid from "./Datagrid";
 
-function Members() {
+function Memberships() {
   let { noteId } = useParams();
 
   const columns = [
@@ -204,10 +204,10 @@ function Members() {
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+              d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
             />
           </svg>
-          Add Member
+          Create Membership
         </button>
 
         <button
@@ -250,7 +250,7 @@ function Members() {
                 d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
               />
             </svg>
-            Delete Members
+            Delete Memberships
           </button>
         )}
 
@@ -263,7 +263,7 @@ function Members() {
                 {/* Modal header */}
                 <div className="flex items-center justify-between border-b">
                   <h3 className="text-lg mb-3 font-semibold text-gray-900 dark:text-white">
-                    Add New Member
+                    Create New Membership
                   </h3>
                   <button
                     onClick={toggleModal}
@@ -292,71 +292,54 @@ function Members() {
                   <div className="grid gap-4 mb-4">
                     <div>
                       <label
-                        htmlFor="fullName"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        id="fullName"
-                        name="fullName"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Enter full name"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Enter email address"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="phone"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Enter phone number"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="membership"
+                        htmlFor="membershipType"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
                         Membership Type
                       </label>
-                      <select
-                        id="membership"
-                        name="membership"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      <input
+                        type="text"
+                        id="membershipType"
+                        name="membershipType"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Enter membership type"
                         required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="price"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                        <option value="" disabled selected>
-                          Select membership type
-                        </option>
-                        <option value="monthly">Monthly</option>
-                        <option value="annual">Annual</option>
-                      </select>
+                        Price
+                      </label>
+                      <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        min="0"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Enter price"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="duration"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Duration (in months)
+                      </label>
+                      <input
+                        type="number"
+                        id="duration"
+                        name="duration"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Enter duration"
+                        required
+                        min="0" 
+                        max="12"
+                      />
                     </div>
                   </div>
                   <button
@@ -375,7 +358,7 @@ function Members() {
                         clipRule="evenodd"
                       ></path>
                     </svg>
-                    Add new member
+                    Create membership
                   </button>
                 </form>
               </div>
@@ -394,4 +377,4 @@ function Members() {
   );
 }
 
-export default Members;
+export default Memberships;
