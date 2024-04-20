@@ -17,15 +17,6 @@ const cardData = [
 ];
 
 function Notes() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   const [isOpen, setIsOpen] = useState(false);
 
