@@ -13,8 +13,8 @@ import NavBar from "./NavBar";
 import ContactUs from "./ContactUs";
 import ResetPassword from "./ResetPassword";
 import Notes from "./Notes";
-import Sidebar from "./Sidebar";
 import Members from "./Members";
+import Managers from "./Managers";
 
 function Main() {
   const context = useContext(globalContext);
@@ -49,6 +49,7 @@ function Main() {
           <Route path="/notes" element={<Notes />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
           <Route path="/notes/:noteId/members" element={<Members />}></Route>
+          <Route path="/notes/:noteId/managers" element={<Managers />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
