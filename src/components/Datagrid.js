@@ -55,7 +55,7 @@ export default function DataGridDemo() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Box sx={{ height: 400 }} className="ms-5 mt-10 me-5 mb-5 w-300">
+      <Box  className="ms-5 mt-10 me-5 mb-5 w-300">
         <DataGrid
           rows={rows}
           columns={columns}
@@ -66,7 +66,7 @@ export default function DataGridDemo() {
               },
             },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[5, 10]}
           checkboxSelection
           disableRowSelectionOnClick
         />
