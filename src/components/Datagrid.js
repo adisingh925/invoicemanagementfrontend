@@ -55,7 +55,7 @@ export default function DataGridDemo() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Box  className="ms-5 mt-10 me-5 mb-5 w-300">
+      <Box className="ms-5 mt-10 me-5 mb-5">
         <DataGrid
           rows={rows}
           columns={columns}
