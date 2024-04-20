@@ -1,9 +1,10 @@
 import React from "react";
-import NavBar from "./NavBar";
 import DataGridDemo from "./Datagrid";
 import { Link, useParams } from "react-router-dom";
+import NavBar from "./NavBar";
 
-function Sidebar() {
+function Members() {
+    
   let { noteId } = useParams();
 
   return (
@@ -131,4 +132,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default Members;
