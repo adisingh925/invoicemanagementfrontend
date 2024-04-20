@@ -9,7 +9,6 @@ import { useContext } from "react";
 import globalContext from "../context/GlobalContext";
 import SnackBar from "./SnackBar";
 import Dashboard from "./Dashboard";
-import NavBar from "./NavBar";
 import ContactUs from "./ContactUs";
 import ResetPassword from "./ResetPassword";
 import Notes from "./Notes";
