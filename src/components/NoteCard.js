@@ -10,21 +10,9 @@ function NoteCard(props) {
             <div
               key={index}
               className="relative max-w-sm min-w-64 w-full p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-              style={{ height: "250px" }} // Set fixed height here
+              style={{ height: "250px" }}
             >
-              <Link
-                to={
-                  process.env.NODE_ENV === "development"
-                    ? process.env.REACT_APP_DEVELOPMENT_URL +
-                      "gym/" +
-                      card.gym_id +
-                      "/members"
-                    : process.env.REACT_APP_SERVER_URL +
-                      "gym/" +
-                      card.gym_id +
-                      "/members"
-                }
-              >
+              <Link to={card.gym_id + "/members"}>
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {card.gym_name}
                 </h5>
