@@ -379,6 +379,164 @@ const State = (props) => {
     }
   };
 
+  /**
+   * manager functions
+   */
+
+  const insertManagerData = async (managerData, gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/insert/manager/${gymId}`,
+        managerData
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+        readManagerData(gymId);
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const updateManagerData = async (managerData, gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/update/manager/${gymId}`,
+        managerData
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+        readManagerData(gymId);
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const [managerData, setManagerData] = useState([]);
+
+  const readManagerData = async (gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "get",
+        `/read/manager/${gymId}`
+      );
+
+      setManagerData(response.data.data);
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const deleteManagerData = async (managerIds, gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/delete/manager/${gymId}`,
+        { manager_ids: managerIds }
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+        readManagerData(gymId);
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
   const handleSnackBarClose = () => {
     setSnackbarState(false);
   };
@@ -412,6 +570,11 @@ const State = (props) => {
         readMembershipData,
         updateMembershipData,
         deleteMembershipData,
+        insertManagerData,
+        updateManagerData,
+        managerData,
+        readManagerData,
+        deleteManagerData
       }}
     >
       {props.children}
