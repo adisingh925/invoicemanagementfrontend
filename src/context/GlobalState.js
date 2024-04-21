@@ -184,6 +184,46 @@ const State = (props) => {
     }
   };
 
+  const [gymData, setGymData] = useState({});
+
+  const readGymData = async () => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "get",
+        `/read/gym`
+      );
+
+      setGymData(response.data.data);
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
   const handleSnackBarClose = () => {
     setSnackbarState(false);
   };
@@ -210,6 +250,8 @@ const State = (props) => {
         signup,
         sendResetLink,
         insertGymData,
+        readGymData,
+        gymData
       }}
     >
       {props.children}

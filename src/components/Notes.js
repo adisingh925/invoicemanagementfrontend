@@ -1,27 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NoteCard from "./NoteCard";
 import NavBar from "./NavBar";
 import globalContext from "../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
 
-const cardData = [
-  {
-    title: "Noteworthy technology acquisitions 2021",
-    description:
-      "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-    link: "http://localhost:3000/notes/1/members",
-  },
-  {
-    title: "Another Title",
-    description: "Here's another description for another card.",
-    link: "http://localhost:3000/notes/2/members",
-  },
-];
-
 function Notes() {
   let navigate = useNavigate();
   const context = useContext(globalContext);
-  const { insertGymData } = context;
+  const { insertGymData, readGymData, gymData } = context;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,6 +32,15 @@ function Notes() {
       toggleModal();
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      readGymData();
+    } else {
+      navigate("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onChange = (event) => {
     setGymDetails({ ...gymDetails, [event.target.name]: event.target.value });
@@ -192,7 +187,7 @@ function Notes() {
         </div>
       )}
 
-      <NoteCard cardData={cardData} />
+      <NoteCard cardData={gymData} />
     </>
   );
 }

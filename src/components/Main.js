@@ -46,11 +46,11 @@ function Main() {
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
           <Route path="/contactus" element={<ContactUs />}></Route>
-          <Route path="/notes" element={<Notes />}></Route>
+          <Route path="/gym" element={<Notes />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword />}></Route>
-          <Route path="/notes/:noteId/members" element={<Members />}></Route>
-          <Route path="/notes/:noteId/managers" element={<Managers />}></Route>
-          <Route path="/notes/:noteId/memberships" element={<Memberships />}></Route>
+          <Route path="/gym/:gymId/members" element={<Members />}></Route>
+          <Route path="/gym/:gymId/managers" element={<Managers />}></Route>
+          <Route path="/gym/:gymId/memberships" element={<Memberships />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
