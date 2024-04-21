@@ -28,7 +28,7 @@ function Notes() {
     if (response === -2) {
       localStorage.removeItem("token");
       navigate("/login");
-    }else if(response === 1){
+    } else if (response === 1) {
       toggleModal();
     }
   };
@@ -187,7 +187,13 @@ function Notes() {
         </div>
       )}
 
-      <NoteCard cardData={gymData} />
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+          {gymData.map((card, index) => (
+            <NoteCard cardData={card} />
+          ))}
+        </div>
+      </div>
     </>
   );
 }

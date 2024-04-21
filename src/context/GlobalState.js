@@ -184,7 +184,7 @@ const State = (props) => {
     }
   };
 
-  const [gymData, setGymData] = useState({});
+  const [gymData, setGymData] = useState([]);
 
   const readGymData = async () => {
     try {
