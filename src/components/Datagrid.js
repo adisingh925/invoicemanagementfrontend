@@ -14,7 +14,7 @@ export default function Datagrid(props) {
     <ThemeProvider theme={darkTheme}>
       <Box className="ms-5 mt-10 me-5 mb-5">
         <DataGrid
-          getRowId={(row) => row.membership_id || row.id || row.manager_id}
+          getRowId={(row) => row.membership_id || row.id || row.manager_id || row.member_id}
           rows={props.rows}
           columns={props.columns}
           initialState={{
