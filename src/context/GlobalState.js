@@ -164,6 +164,7 @@ const State = (props) => {
       if (response.data.code === 1) {
         setSeverity("success");
         returnValue = response.data.code;
+        readGymData();
       } else {
         setSeverity("error");
         returnValue = response.data.code;
@@ -224,6 +225,83 @@ const State = (props) => {
     }
   };
 
+  const insertMembershipData = async (membershipData) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/insert/membership`,
+        membershipData
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const [membershipData, setMembershipData] = useState([]);
+
+  const readMembershipData = async (gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "get",
+        `/read/membership/${gymId}`
+      );
+
+      setMembershipData(response.data.data);
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
   const handleSnackBarClose = () => {
     setSnackbarState(false);
   };
@@ -251,7 +329,10 @@ const State = (props) => {
         sendResetLink,
         insertGymData,
         readGymData,
-        gymData
+        gymData,
+        insertMembershipData,
+        membershipData,
+        readMembershipData
       }}
     >
       {props.children}
