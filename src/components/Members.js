@@ -4,7 +4,7 @@ import NavBar from "./NavBar";
 import Datagrid from "./Datagrid";
 
 function Members() {
-  let { noteId } = useParams();
+  let { gymId } = useParams();
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -80,7 +80,7 @@ function Members() {
           <ul className="space-y-2 font-medium">
             <li>
               <Link
-                to={`/notes/${noteId}/members`}
+                to={`/gym/${gymId}/members`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -103,7 +103,7 @@ function Members() {
             </li>
             <li>
               <Link
-                to={`/notes/${noteId}/managers`}
+                to={`/gym/${gymId}/managers`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -129,7 +129,7 @@ function Members() {
             </li>
             <li>
               <Link
-                to={`/notes/${noteId}/earnings`}
+                to={`/gym/${gymId}/earnings`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -155,7 +155,7 @@ function Members() {
             </li>
             <li>
               <Link
-                to={`/notes/${noteId}/memberships`}
+                to={`/gym/${gymId}/memberships`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
