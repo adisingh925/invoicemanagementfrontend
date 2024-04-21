@@ -42,6 +42,8 @@ function Notes() {
     if (response === -2) {
       localStorage.removeItem("token");
       navigate("/login");
+    }else if(response === 1){
+      toggleModal();
     }
   };
 
