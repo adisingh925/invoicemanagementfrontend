@@ -1,62 +1,69 @@
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import Datagrid from "./Datagrid";
+import globalContext from "../context/GlobalContext";
 
 function Members() {
   let { gymId } = useParams();
+  let navigate = useNavigate();
+  const context = useContext(globalContext);
+
+  const {
+    readMembershipData,
+    membershipData,
+    insertMemberData,
+    updateMemberData,
+    memberData,
+    deleteMemberData,
+    readMemberData,
+  } = context;
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "member_id", headerName: "ID", width: 90 },
     {
-      field: "fullName",
+      field: "member_name",
       headerName: "Member Name",
       width: 150,
       editable: true,
     },
     {
-      field: "email",
+      field: "member_email",
       headerName: "Member Email",
       width: 150,
       editable: true,
     },
     {
-      field: "phoneNumber",
+      field: "member_phone_number",
       headerName: "Phone Number",
       type: "number",
       width: 150,
       editable: true,
     },
     {
-      field: "membershipType",
+      field: "member_membership_type",
       headerName: "Membership Type",
       width: 150,
       editable: true,
     },
   ];
 
-  const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 14 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 31 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 31 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 11 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  ];
+  const [member_ids, setMemberIds] = useState([]);
 
   const [isItemSelected, isItemSelectedChanged] = useState(false);
 
   const handleSelectionModelChange = (selectionModel) => {
-    console.log("Selected Rows:", selectionModel);
     isItemSelectedChanged(selectionModel.length > 0);
+    setMemberIds(selectionModel);
   };
 
-  const handleRowUpdate = (update, currentRow) => {
-    console.log("Row updated", update, currentRow);
-    return update;
+  const handleRowUpdate = async (updatedRow) => {
+    let response = await updateMemberData(updatedRow, gymId);
+    if (response === -2) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+    return updatedRow;
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -64,6 +71,56 @@ function Members() {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let response = await insertMemberData(memberDetails, gymId);
+    if (response === -2) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    } else if (response === 1) {
+      toggleModal();
+    }
+  };
+
+  const [memberDetails, setMemberDetails] = useState({
+    member_name: "",
+    member_email: "",
+    member_phone_number: "",
+    member_membership_type: "",
+  });
+
+  const onChange = (event) => {
+    setMemberDetails({
+      ...memberDetails,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleDeleteClicked = async () => {
+    let response = await deleteMemberData(member_ids, gymId);
+    if (response === -2) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    } else if (response === 1) {
+      setMemberIds([]);
+    }
+  };
+
+  const onRefreshClicked = async () => {
+    readMemberData(gymId);
+    readMembershipData(gymId);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      readMembershipData(gymId);
+      readMemberData(gymId);
+    } else {
+      navigate("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -210,6 +267,7 @@ function Members() {
 
         <button
           type="button"
+          onClick={onRefreshClicked}
           className="ms-5 mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           <svg
@@ -232,6 +290,7 @@ function Members() {
         {isItemSelected && (
           <button
             type="button"
+            onClick={handleDeleteClicked}
             className="ms-5 mt-5 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           >
             <svg
@@ -286,7 +345,7 @@ function Members() {
                   </button>
                 </div>
                 {/* Modal body */}
-                <form className="p-4 md:p-5">
+                <form className="p-4 md:p-5" onSubmit={handleSubmit}>
                   <div className="grid gap-4 mb-4">
                     <div>
                       <label
@@ -298,7 +357,8 @@ function Members() {
                       <input
                         type="text"
                         id="fullName"
-                        name="fullName"
+                        name="member_name"
+                        onChange={onChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Enter full name"
                         required
@@ -314,7 +374,8 @@ function Members() {
                       <input
                         type="email"
                         id="email"
-                        name="email"
+                        onChange={onChange}
+                        name="member_email"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Enter email address"
                         required
@@ -330,7 +391,8 @@ function Members() {
                       <input
                         type="tel"
                         id="phone"
-                        name="phone"
+                        onChange={onChange}
+                        name="member_phone_number"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Enter phone number"
                         required
@@ -345,15 +407,22 @@ function Members() {
                       </label>
                       <select
                         id="membership"
-                        name="membership"
+                        name="member_membership_type"
+                        onChange={onChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         required
                       >
                         <option value="" disabled selected>
                           Select membership type
                         </option>
-                        <option value="monthly">Monthly</option>
-                        <option value="annual">Annual</option>
+                        {membershipData.map((membershipData) => (
+                          <option
+                            key={membershipData.membership_id}
+                            value={membershipData.membership_id}
+                          >
+                            {membershipData.membership_name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -383,7 +452,7 @@ function Members() {
 
         <Datagrid
           columns={columns}
-          rows={rows}
+          rows={memberData}
           handleSelectionModelChange={handleSelectionModelChange}
           handleRowUpdate={handleRowUpdate}
         />

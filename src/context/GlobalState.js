@@ -537,6 +537,168 @@ const State = (props) => {
     }
   };
 
+  /**
+   * member functions
+   */
+
+  const insertMemberData = async (memberData, gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/insert/member/${gymId}`,
+        memberData
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+        readMemberData(gymId);
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const updateMemberData = async (memberData, gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/update/member/${gymId}`,
+        memberData
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+        readMemberData(gymId);
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const [memberData, setMemberData] = useState([]);
+
+  const readMemberData = async (gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "get",
+        `/read/member/${gymId}`
+      );
+
+      setMemberData(response.data.data);
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const deleteMemberData = async (memberIds, gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/delete/member/${gymId}`,
+        { member_ids: memberIds }
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+        readMemberData(gymId);
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  /**
+   * ***********************************************
+   */
+
   const handleSnackBarClose = () => {
     setSnackbarState(false);
   };
@@ -574,7 +736,12 @@ const State = (props) => {
         updateManagerData,
         managerData,
         readManagerData,
-        deleteManagerData
+        deleteManagerData,
+        insertMemberData,
+        updateMemberData,
+        memberData,
+        deleteMemberData,
+        readMemberData
       }}
     >
       {props.children}
