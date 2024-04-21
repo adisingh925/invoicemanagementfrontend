@@ -3,18 +3,6 @@ import GlobalContext from "./GlobalContext";
 import MakeRequest from "../axios/MakeRequest";
 
 const State = (props) => {
-  const refreshTable = async () => {
-    try {
-      setTableData([]);
-      return getTableData(5, 1);
-    } catch (error) {
-      setProgress(100);
-      setSeverity("error");
-      setSnackbarText(error);
-      setSnackbarState(true);
-    }
-  };
-
   const login = async (credentials) => {
     try {
       let returnValue = -1;
@@ -159,111 +147,7 @@ const State = (props) => {
     }
   };
 
-  const getTableData = async (limit, page) => {
-    try {
-      let returnValue = -1;
-      setProgress(10);
-
-      let response = await MakeRequest(
-        localStorage.getItem("token"),
-        "get",
-        "/getData?limit=" + limit + "&page=" + page,
-        null
-      );
-
-      setProgress(50);
-
-      if (response.data.code === 1) {
-        setSeverity("success");
-        const newTableData = response.data.data.filter(
-          (newItem) =>
-            !tableData.some(
-              (existingItem) => existingItem.invoice_id === newItem.invoice_id
-            )
-        );
-
-        setTableData((prevData) => [...prevData, ...newTableData]);
-        returnValue = response.data.code;
-      } else {
-        setSeverity("error");
-        returnValue = response.data.code;
-      }
-
-      setSnackbarText(response.data.msg);
-      setSnackbarState(true);
-
-      setProgress(100);
-
-      return returnValue;
-    } catch (error) {
-      setProgress(100);
-      setSeverity("error");
-      setSnackbarText("Some error occurred. Please try again later.");
-      setSnackbarState(true);
-
-      return -1;
-    }
-  };
-
-  const onPaginationModelChange = (newModel) => {
-    let pageNumber = newModel.page;
-    let pageSize = newModel.pageSize;
-
-    if (tableData.length >= (pageNumber + 1) * pageSize) {
-      return;
-    } else {
-      let pageNumber = Math.floor(tableData.length / pageSize);
-      getTableData(pageSize, pageNumber + 1);
-    }
-  };
-
-  const getConfigsForClient = async () => {
-    try {
-      let returnValue = -1;
-      setProgress(10);
-
-      let response = await MakeRequest(
-        localStorage.getItem("token"),
-        "get",
-        "/getconfigs",
-        null
-      );
-
-      setProgress(50);
-
-      if (response.data.code === 1) {
-        setSeverity("success");
-        const newConfigData = response.data.data.filter(
-          (newItem) =>
-            !config.some(
-              (existingItem) => existingItem.customer_id === newItem.customer_id
-            )
-        );
-
-        setConfig((prevData) => [...prevData, ...newConfigData]);
-        returnValue = response.data.code;
-      } else {
-        setSeverity("error");
-        returnValue = response.data.code;
-      }
-
-      setSnackbarText(response.data.msg);
-      setSnackbarState(true);
-
-      setProgress(100);
-
-      return returnValue;
-    } catch (error) {
-      setProgress(100);
-      setSeverity("error");
-      setSnackbarText("Some error occurred. Please try again later.");
-      setSnackbarState(true);
-
-      return -1;
-    }
-  };
-
-  const updateConfigForCustomer = async (id, value) => {
+  const insertGymData = async (gymData) => {
     try {
       let returnValue = -1;
       setProgress(10);
@@ -271,8 +155,8 @@ const State = (props) => {
       let response = await MakeRequest(
         localStorage.getItem("token"),
         "post",
-        `/updateconfig/${id}`,
-        { parsing_data: value }
+        `/insert/gym`,
+        gymData
       );
 
       setProgress(50);
@@ -304,9 +188,6 @@ const State = (props) => {
     setSnackbarState(false);
   };
 
-  const [tableData, setTableData] = useState([]);
-  const [config, setConfig] = useState([]);
-
   const [snackbarState, setSnackbarState] = useState(false);
   const [snackbarText, setSnackbarText] = useState("");
   const [severity, setSeverity] = useState("success");
@@ -325,16 +206,10 @@ const State = (props) => {
         progress,
         setProgress,
         handleSnackBarClose,
-        getTableData,
-        tableData,
-        onPaginationModelChange,
-        config,
-        getConfigsForClient,
-        updateConfigForCustomer,
-        refreshTable,
         resetPassword,
         signup,
         sendResetLink,
+        insertGymData,
       }}
     >
       {props.children}

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NoteCard from "./NoteCard";
 import NavBar from "./NavBar";
+import globalContext from "../context/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 const cardData = [
   {
@@ -17,11 +19,34 @@ const cardData = [
 ];
 
 function Notes() {
+  let navigate = useNavigate();
+  const context = useContext(globalContext);
+  const { insertGymData } = context;
 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
+  };
+
+  const [gymDetails, setGymDetails] = useState({
+    name: "",
+    address: "",
+    phone: "",
+    email: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let response = await insertGymData(gymDetails);
+    if (response === -2) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  };
+
+  const onChange = (event) => {
+    setGymDetails({ ...gymDetails, [event.target.name]: event.target.value });
   };
 
   return (
@@ -32,7 +57,7 @@ function Notes() {
         onClick={toggleModal}
         className="m-5 w-100 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
-        Add Note
+        Add Gym
       </button>
 
       {isOpen && (
@@ -68,19 +93,20 @@ function Notes() {
                 </button>
               </div>
               {/* Modal body */}
-              <form className="p-4 md:p-5">
+              <form className="p-4 md:p-5" onSubmit={handleSubmit}>
                 <div className="grid gap-4 mb-4">
                   <div>
                     <label
                       htmlFor="gymName"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Gym Name
+                      Gym's Name
                     </label>
                     <input
                       type="text"
+                      onChange={onChange}
                       id="gymName"
-                      name="gymName"
+                      name="name"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                       placeholder="Enter gym name"
                       required
@@ -91,10 +117,11 @@ function Notes() {
                       htmlFor="address"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Address
+                      Gym's Address
                     </label>
                     <input
                       type="text"
+                      onChange={onChange}
                       id="address"
                       name="address"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -107,14 +134,17 @@ function Notes() {
                       htmlFor="phone"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Phone Number
+                      Gym's Phone Number
                     </label>
                     <input
                       type="tel"
+                      onChange={onChange}
                       id="phone"
                       name="phone"
+                      pattern="[0-9]{10}"
+                      title="Please enter a 10-digit phone number"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                      placeholder="Enter phone number"
+                      placeholder="Enter phone number (10 digits)"
                       required
                     />
                   </div>
@@ -123,10 +153,11 @@ function Notes() {
                       htmlFor="email"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Email
+                      Gym's Email
                     </label>
                     <input
                       type="email"
+                      onChange={onChange}
                       id="email"
                       name="email"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
