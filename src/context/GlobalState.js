@@ -225,7 +225,7 @@ const State = (props) => {
     }
   };
 
-  const insertMembershipData = async (membershipData) => {
+  const insertMembershipData = async (membershipData, gymId) => {
     try {
       let returnValue = -1;
       setProgress(10);
@@ -233,7 +233,7 @@ const State = (props) => {
       let response = await MakeRequest(
         localStorage.getItem("token"),
         "post",
-        `/insert/membership`,
+        `/insert/membership/${gymId}`,
         membershipData
       );
 
@@ -242,6 +242,45 @@ const State = (props) => {
       if (response.data.code === 1) {
         setSeverity("success");
         returnValue = response.data.code;
+        readMembershipData(gymId);
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
+  const updateMembershipData = async (membershipData, gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/update/membership/${gymId}`,
+        membershipData
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+        readMembershipData(gymId);
       } else {
         setSeverity("error");
         returnValue = response.data.code;
@@ -302,6 +341,44 @@ const State = (props) => {
     }
   };
 
+  const deleteMembershipData = async (membership_ids, gymId) => {
+    try {
+      let returnValue = -1;
+      setProgress(10);
+
+      let response = await MakeRequest(
+        localStorage.getItem("token"),
+        "post",
+        `/delete/membership/${gymId}`,
+        { membership_ids: membership_ids }
+      );
+
+      setProgress(50);
+
+      if (response.data.code === 1) {
+        setSeverity("success");
+        returnValue = response.data.code;
+        readMembershipData(gymId);
+      } else {
+        setSeverity("error");
+        returnValue = response.data.code;
+      }
+
+      setSnackbarText(response.data.msg);
+      setSnackbarState(true);
+      setProgress(100);
+
+      return returnValue;
+    } catch (error) {
+      setProgress(100);
+      setSeverity("error");
+      setSnackbarText("Some error occurred. Please try again later.");
+      setSnackbarState(true);
+
+      return -1;
+    }
+  };
+
   const handleSnackBarClose = () => {
     setSnackbarState(false);
   };
@@ -332,7 +409,9 @@ const State = (props) => {
         gymData,
         insertMembershipData,
         membershipData,
-        readMembershipData
+        readMembershipData,
+        updateMembershipData,
+        deleteMembershipData,
       }}
     >
       {props.children}

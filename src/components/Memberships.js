@@ -9,10 +9,16 @@ function Memberships() {
 
   let navigate = useNavigate();
   const context = useContext(globalContext);
-  const { insertMembershipData, readMembershipData, membershipData } = context;
+  const {
+    insertMembershipData,
+    readMembershipData,
+    membershipData,
+    updateMembershipData,
+    deleteMembershipData,
+  } = context;
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "membership_id", headerName: "ID", width: 90 },
     {
       field: "membership_name",
       headerName: "Membership Name",
@@ -34,16 +40,23 @@ function Memberships() {
     },
   ];
 
+  const [membership_ids, setMembershipIds] = useState([]);
+
   const [isItemSelected, isItemSelectedChanged] = useState(false);
 
   const handleSelectionModelChange = (selectionModel) => {
-    console.log("Selected Rows:", selectionModel);
     isItemSelectedChanged(selectionModel.length > 0);
+    setMembershipIds(selectionModel);
+    console.log(membership_ids);
   };
 
-  const handleRowUpdate = (update, currentRow) => {
-    console.log("Row updated", update, currentRow);
-    return update;
+  const handleRowUpdate = async (updatedRow) => {
+    let response = await updateMembershipData(updatedRow, gymId);
+    if (response === -2) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+    return updatedRow;
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +67,7 @@ function Memberships() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let response = await insertMembershipData(membershipDetails);
+    let response = await insertMembershipData(membershipDetails, gymId);
     if (response === -2) {
       localStorage.removeItem("token");
       navigate("/login");
@@ -73,10 +86,9 @@ function Memberships() {
   }, []);
 
   const [membershipDetails, setMembershipDetails] = useState({
-    gym_id: gymId,
-    name: "",
-    price: "",
-    duration: "",
+    membership_name: "",
+    membership_price: "",
+    membership_duration_months: "",
   });
 
   const onChange = (event) => {
@@ -84,6 +96,16 @@ function Memberships() {
       ...membershipDetails,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleDeleteClicked = async () => {
+    let response = await deleteMembershipData(membership_ids, gymId);
+    if (response === -2) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    } else if (response === 1) {
+      setMembershipIds([]);
+    }
   };
 
   return (
@@ -253,6 +275,7 @@ function Memberships() {
         {isItemSelected && (
           <button
             type="button"
+            onClick={handleDeleteClicked}
             className="ms-5 mt-5 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           >
             <svg
@@ -320,7 +343,7 @@ function Memberships() {
                         type="text"
                         id="membershipName"
                         onChange={onChange}
-                        name="name"
+                        name="membership_name"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Enter membership name"
                         required
@@ -337,7 +360,7 @@ function Memberships() {
                         type="number"
                         id="price"
                         onChange={onChange}
-                        name="price"
+                        name="membership_price"
                         min="0"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Enter price"
@@ -355,7 +378,7 @@ function Memberships() {
                         type="number"
                         onChange={onChange}
                         id="duration"
-                        name="duration"
+                        name="membership_duration_months"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Enter duration"
                         required
