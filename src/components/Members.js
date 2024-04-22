@@ -19,15 +19,8 @@ function Members() {
     readMemberData,
   } = context;
 
-  // This function formats the timestamp to display only the date part
   const formatDate = (timestamp) => {
-    const insertDate = new Date(timestamp);
-    const dueDate = new Date(insertDate.getTime());
-    dueDate.setMonth(dueDate.getMonth() + 3);
-    return {
-      insertDate: insertDate.toLocaleDateString(),
-      dueDate: dueDate.toLocaleDateString(),
-    };
+    return new Date(timestamp).toLocaleDateString();
   };
 
   const columns = [
@@ -61,13 +54,13 @@ function Members() {
       field: "insert_time",
       headerName: "Joining Date",
       width: 150,
-      valueGetter: (params) => formatDate(params.row.insert_time).insertDate,
+      valueGetter: (params) => formatDate(params.row.insert_time),
     },
     {
-      field: "due_date",
+      field: "payment_due_date",
       headerName: "Next Payment Date",
       width: 150,
-      valueGetter: (params) => formatDate(params.row.insert_time).dueDate,
+      valueGetter: (params) => formatDate(params.row.payment_due_date),
     },
   ];
 
@@ -430,7 +423,7 @@ function Members() {
                       </label>
                       <select
                         id="membership"
-                        name="membership"
+                        name="member_membership_type"
                         onChange={onChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         required
