@@ -410,6 +410,9 @@ function Managers() {
         )}
 
         <Datagrid
+          columnVisibilityModel={{
+            manager_id: false,
+          }}
           columns={columns}
           rows={managerData}
           handleSelectionModelChange={handleSelectionModelChange}

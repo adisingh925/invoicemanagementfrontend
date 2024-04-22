@@ -14,7 +14,10 @@ export default function Datagrid(props) {
     <ThemeProvider theme={darkTheme}>
       <Box className="ms-5 mt-10 me-5 mb-5">
         <DataGrid
-          getRowId={(row) => row.membership_id || row.id || row.manager_id || row.member_id}
+          columnVisibilityModel={props.columnVisibilityModel}
+          getRowId={(row) =>
+            row.membership_id || row.id || row.manager_id || row.member_id
+          }
           rows={props.rows}
           columns={props.columns}
           initialState={{
@@ -26,6 +29,7 @@ export default function Datagrid(props) {
           }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
+          disableRowSelectionOnClick
           processRowUpdate={props.handleRowUpdate}
           onRowSelectionModelChange={props.handleSelectionModelChange}
         />

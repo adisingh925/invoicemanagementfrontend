@@ -18,7 +18,7 @@ function Memberships() {
   } = context;
 
   const columns = [
-    { field: "membership_id", headerName: "ID", width: 90 },
+    { field: "membership_id", headerName: "ID", width: 90, hide: true },
     {
       field: "membership_name",
       headerName: "Membership Name",
@@ -33,7 +33,7 @@ function Memberships() {
     },
     {
       field: "membership_duration_months",
-      headerName: "Duration",
+      headerName: "Duration (Months)",
       type: "number",
       width: 150,
       editable: true,
@@ -110,7 +110,7 @@ function Memberships() {
 
   const onRefreshClicked = async () => {
     readMembershipData(gymId);
-  }
+  };
 
   return (
     <>
@@ -417,6 +417,9 @@ function Memberships() {
         )}
 
         <Datagrid
+          columnVisibilityModel={{
+            membership_id: false,
+          }}
           columns={columns}
           rows={membershipData}
           handleSelectionModelChange={handleSelectionModelChange}

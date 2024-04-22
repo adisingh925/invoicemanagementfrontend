@@ -19,6 +19,17 @@ function Members() {
     readMemberData,
   } = context;
 
+  // This function formats the timestamp to display only the date part
+  const formatDate = (timestamp) => {
+    const insertDate = new Date(timestamp);
+    const dueDate = new Date(insertDate.getTime());
+    dueDate.setMonth(dueDate.getMonth() + 3);
+    return {
+      insertDate: insertDate.toLocaleDateString(),
+      dueDate: dueDate.toLocaleDateString(),
+    };
+  };
+
   const columns = [
     { field: "member_id", headerName: "ID", width: 90 },
     {
@@ -45,6 +56,18 @@ function Members() {
       headerName: "Membership Type",
       width: 150,
       editable: true,
+    },
+    {
+      field: "insert_time",
+      headerName: "Joining Date",
+      width: 150,
+      valueGetter: (params) => formatDate(params.row.insert_time).insertDate,
+    },
+    {
+      field: "due_date",
+      headerName: "Next Payment Date",
+      width: 150,
+      valueGetter: (params) => formatDate(params.row.insert_time).dueDate,
     },
   ];
 
@@ -130,7 +153,7 @@ function Members() {
 
       <aside
         id="logo-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-blue sm:translate-x-0 dark:bg-blue"
+        className="fixed top-0 left-0 z-40 w-60 h-screen pt-20 transition-transform -translate-x-full bg-blue sm:translate-x-0 dark:bg-blue"
         aria-label="Sidebar"
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-blue border-r border-gray-500 dark:bg-blue">
@@ -451,6 +474,9 @@ function Members() {
         )}
 
         <Datagrid
+          columnVisibilityModel={{
+            member_id: false,
+          }}
           columns={columns}
           rows={memberData}
           handleSelectionModelChange={handleSelectionModelChange}
