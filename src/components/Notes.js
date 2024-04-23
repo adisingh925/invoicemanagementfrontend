@@ -35,7 +35,14 @@ function Notes() {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      readGymData();
+      async function fetchData() {
+        let response = await readGymData();
+        if (response === -2) {
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      }
+      fetchData();
     } else {
       navigate("/login");
     }
