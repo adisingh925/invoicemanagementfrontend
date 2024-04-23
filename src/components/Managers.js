@@ -27,7 +27,7 @@ function Managers() {
     },
     {
       field: "manager_email",
-      headerName: "Manager Email",
+      headerName: "Manager's Email",
       width: 150,
       editable: true,
     },
@@ -35,6 +35,12 @@ function Managers() {
       field: "manager_phone_number",
       headerName: "Phone Number",
       type: "number",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "manager_password",
+      headerName: "Manager's Password",
       width: 150,
       editable: true,
     },
@@ -88,6 +94,7 @@ function Managers() {
     manager_name: "",
     manager_phone_number: "",
     manager_email: "",
+    manager_password: "",
   });
 
   const onChange = (event) => {
@@ -362,6 +369,24 @@ function Managers() {
                         name="manager_email"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Enter manager's email address"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="managerEmail"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Manager's Password
+                      </label>
+                      <input
+                        type="password"
+                        id="managerPassword"
+                        onChange={onChange}
+                        name="manager_password"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Enter manager's password"
                         required
                       />
                     </div>
